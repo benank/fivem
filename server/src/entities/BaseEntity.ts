@@ -35,6 +35,19 @@ export class BaseEntity {
 		return GetEntityAttachedTo(this.handle);
 	}
 
+	public set Position(pos: Vector3, ) {
+		SetEntityCoords(
+			this.handle, 
+			pos.x, 
+			pos.y, 
+			pos.z, 
+			true, 
+			false, 
+			false, 
+			false
+		);
+	}
+
 	public get Position(): Vector3 {
 		return Vector3.fromArray(GetEntityCoords(this.handle));
 	}

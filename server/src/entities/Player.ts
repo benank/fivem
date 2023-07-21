@@ -41,6 +41,10 @@ export class Player {
 	public get Ped(): Ped {
 		return new Ped(GetPlayerPed(this.Src));
 	}
+	
+	public set Model(model: string) {
+		SetPlayerModel(this.Src, GetHashKey(model));
+	}
 
 	public get Tokens(): string[] {
 		return getPlayerTokens(this.source);
