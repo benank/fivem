@@ -1,4 +1,4 @@
-import { Prop, Vehicle, Entity, Model, Color } from '..';
+import { Prop, Vehicle, Entity, Model, Color, PedHash, Wait } from '..';
 import cfx, { StateBagChangeHandler } from '../cfx';
 import { ClassTypes } from '../enums/ClassTypes';
 import { Ped } from './';
@@ -216,5 +216,20 @@ export class Player {
 
 	public CanPedHearPlayer(ped: Ped): boolean {
 		return CanPedHearPlayer(this.handle, ped.Handle);
+	}
+	
+	public set Model(model: PedHash) {
+        if (IsModelInCdimage(model) && IsModelValid(model)) {
+			const loadModel = async () => {
+				RequestModel(model);
+				while (!HasModelLoaded(model)) {
+					await Wait(100);
+				}
+				SetPlayerModel(PlayerId(), model);
+				SetModelAsNoLongerNeeded(model);
+			};
+			
+			loadModel();
+        }
 	}
 }
