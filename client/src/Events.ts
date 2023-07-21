@@ -56,22 +56,17 @@ const getClassFromArguments = (...args: any[]): any[] => {
 	return newArgs;
 };
 
-export class Events {
+export class NetEvents {
 	/**
 	 * An onNet wrapper that properly converts the type into the correct type
 	 */
-	public onNet = (eventName: string, event: NetEvent) => {
+	public static on = (eventName: string, event: NetEvent) => {
 		onNet(eventName, (...args: any[]) => {
 			event(...getClassFromArguments(...args));
 		});
 	};
-
-	/**
-	 * An on wrapper that properly converts the classes
-	 */
-	public on = (eventName: string, event: NetEvent) => {
-		on(eventName, (...args: any[]) => {
-			event(...getClassFromArguments(...args));
-		});
-	};
+	
+	public static emit = (eventName: string, ...args: any[]) => {
+		emitNet(eventName, ...args);
+	}
 }

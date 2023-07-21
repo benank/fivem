@@ -1,6 +1,6 @@
 export * from "./utils";
 
-export * from "./Events";
+export * from "./NetworkEvents";
 export * from "./Game";
 
 export { Convar, Kvp, Resource } from "../../common/index";

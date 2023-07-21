@@ -51,35 +51,23 @@ const getClassFromArguments = (...args: any[]): any[] => {
 	return newArgs;
 };
 
-export class Events {
-	public static cancel(): void {
-		CancelEvent();
+export class NetEvents {
+	
+	public static emit(eventName: string, target: Player | Player[] | 'all', ...args: any[]) {
+		if (target instanceof Player) {
+			emitNet(eventName, target.Source, ...args);
+		} else if (Array.isArray(target) && target.every((p) => p instanceof Player)) {
+			target.forEach((p) => emitNet(eventName, p.Source, ...args));
+		} else if (target === 'all') {
+			emitNet(eventName, -1, ...args);
+		}
 	}
-
-	public static wasCanceled(): boolean {
-		return WasEventCanceled();
-	}
-
-	public static get InvokingResource(): string {
-		return GetInvokingResource();
-	}
-
+	
 	/**
 	 * An onNet wrapper that properly converts the type into the correct type
 	 */
-	public onNet = (eventName: string, event: NetEvent) => {
+	public static on = (eventName: string, event: NetEvent) => {
 		onNet(eventName, (...args: any[]) => {
-			const ply = new Player(source);
-
-			event(ply, ...getClassFromArguments(...args));
-		});
-	};
-
-	/**
-	 * An on wrapper that properly converts the classes
-	 */
-	public on = (eventName: string, event: NetEvent) => {
-		on(eventName, (...args: any[]) => {
 			const ply = new Player(source);
 
 			event(ply, ...getClassFromArguments(...args));
