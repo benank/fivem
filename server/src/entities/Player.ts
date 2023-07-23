@@ -21,7 +21,7 @@ export class Player {
 	}
 
 	public get Exists(): boolean {
-		return this.source !== 0;
+		return DoesPlayerExist(this.Src);
 	}
 
 	public get Source(): number {
@@ -49,6 +49,10 @@ export class Player {
 
 	public get Tokens(): string[] {
 		return getPlayerTokens(this.source);
+	}
+	
+	public GetIdentifier(type: PlayerIdentifier): string {
+		return GetPlayerIdentifierByType(this.Src, type);
 	}
 
 	public get Identifiers(): Record<PlayerIdentifier, string | null> {
@@ -184,6 +188,14 @@ export class Player {
 
 	public set IsMuted(isMuted: boolean) {
 		MumbleSetPlayerMuted(this.source, isMuted);
+	}
+	
+	public set Invincible(isInvincinble: boolean) {
+		SetPlayerInvincible(this.Src, isInvincinble);
+	}
+	
+	public get Invincible() {
+		return GetPlayerInvincible(this.Src);
 	}
 
 	public isAceAllowed(object: string): boolean {
