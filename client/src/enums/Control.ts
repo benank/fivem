@@ -1,3 +1,4 @@
+// https://github.com/citizenfx/fivem-docs/blob/master/content/docs/game-references/controls.md
 export enum Control {
 	NextCamera,
 	LookLeftRight,
