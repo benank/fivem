@@ -4,7 +4,7 @@ export { Vector4 } from "./Vector4";
 export { PointF } from "./PointF";
 export { Maths } from "./Maths";
 export { Quaternion } from "./Quaternion";
-export { Color } from "./Color";
+export { Color, ConsoleColor } from "./Color";
 
 export { cleanPlayerName } from "./cleanPlayerName";
 
