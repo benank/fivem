@@ -1,5 +1,6 @@
 import cfx from "../cfx";
 import { ClassTypes } from "../enum/ClassTypes";
+import { PlayerIdentifier } from "../type/PlayerIdentifier";
 import { cleanPlayerName } from "../utils";
 import { Vector3 } from "../utils";
 import { Ped } from "./Ped";
@@ -41,7 +42,7 @@ export class Player {
 	public get Ped(): Ped {
 		return new Ped(GetPlayerPed(this.Src));
 	}
-	
+
 	public set Model(model: string) {
 		SetPlayerModel(this.Src, GetHashKey(model));
 	}
@@ -50,8 +51,40 @@ export class Player {
 		return getPlayerTokens(this.source);
 	}
 
-	public get Identifiers(): string[] {
-		return getPlayerIdentifiers(this.source);
+	public get Identifiers(): Record<PlayerIdentifier, string | null> {
+		const identifiers = getPlayerIdentifiers(this.source);
+		const playerIdens: Record<PlayerIdentifier, string | null> = {
+			discord: null,
+			fivem: null,
+			ip: null,
+			license: null,
+			license2: null,
+			live: null,
+			steam: null,
+			xbl: null,
+		};
+		
+		identifiers.forEach(iden => {
+			if (iden.includes("discord")) {
+				playerIdens["discord"] = iden.replace("discord:", "");
+			} else if (iden.includes('fivem')) {
+				playerIdens["fivem"] = iden.replace("fivem:", "");
+			} else if (iden.includes('ip')) {
+				playerIdens["ip"] = iden.replace("ip:", "");
+			} else if (iden.includes('license:')) {
+				playerIdens["license"] = iden.replace("license:", "");
+			} else if (iden.includes('license2:')) {
+				playerIdens["license2"] = iden.replace("license2:", "");
+			} else if (iden.includes('live')) {
+				playerIdens["live"] = iden.replace("live:", "");
+			} else if (iden.includes('steam')) {
+				playerIdens["steam"] = iden.replace("steam:", "");
+			} else if (iden.includes('xbl')) {
+				playerIdens["xbl"] = iden.replace("xbl:", "");
+			}
+		});
+		
+		return playerIdens;
 	}
 
 	public get Endpoint(): string {
