@@ -1,4 +1,5 @@
 import { ClassTypes } from "../enum/ClassTypes";
+import { Vector3 } from "../utils";
 import { BaseEntity } from "./BaseEntity";
 
 export class Prop extends BaseEntity {
@@ -23,5 +24,15 @@ export class Prop extends BaseEntity {
 
 	public static fromHandle(handle: number): Prop {
 		return new Prop(handle);
+	}
+
+	public static async Create(hash: string, position: Vector3, isNetwork: boolean) {
+		const handle = CreateObject(hash, position.x, position.y, position.z, isNetwork, true, true);
+		const prop = new Prop(handle);
+		while (!prop.Exists) {
+			await new Promise((res) => setTimeout(res, 1));
+		}
+
+		return prop;
 	}
 }
