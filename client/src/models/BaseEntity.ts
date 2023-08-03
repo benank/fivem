@@ -9,6 +9,7 @@ import { EntityBone } from './EntityBone';
 import cfx, { StateBagChangeHandler } from '../cfx';
 import { Player } from '..';
 import { ClassTypes } from '../enums/ClassTypes';
+import { Entity } from './Entity';
 
 export class BaseEntity {
 	/**
@@ -425,19 +426,19 @@ export class BaseEntity {
 		return new Blip(AddBlipForEntity(this.handle));
 	}
 
-	public setNoCollision(entity: Entity, toggle: boolean): void {
+	public setNoCollision(entity: BaseEntity, toggle: boolean): void {
 		SetEntityNoCollisionEntity(this.handle, entity.Handle, toggle);
 	}
 
-	public hasClearLosToEntity(entity: Entity, traceType = 17): boolean {
+	public hasClearLosToEntity(entity: BaseEntity, traceType = 17): boolean {
 		return HasEntityClearLosToEntity(this.handle, entity.Handle, traceType);
 	}
 
-	public hasClearLosToEntityInFront(entity: Entity): boolean {
+	public hasClearLosToEntityInFront(entity: BaseEntity): boolean {
 		return HasEntityClearLosToEntityInFront(this.handle, entity.Handle);
 	}
 
-	public hasBeenDamagedBy(entity: Entity): boolean {
+	public hasBeenDamagedBy(entity: BaseEntity): boolean {
 		return HasEntityBeenDamagedByEntity(this.handle, entity.Handle, true);
 	}
 
@@ -494,7 +495,7 @@ export class BaseEntity {
 		return v.dotProduct(v) < range * range;
 	}
 
-	public isNearEntity(entity: Entity, bounds: Vector3): boolean {
+	public isNearEntity(entity: BaseEntity, bounds: Vector3): boolean {
 		return IsEntityAtEntity(
 			this.handle,
 			entity.Handle,
@@ -507,7 +508,7 @@ export class BaseEntity {
 		);
 	}
 
-	public isTouching(entity: Entity): boolean {
+	public isTouching(entity: BaseEntity): boolean {
 		return IsEntityTouchingEntity(this.handle, entity.Handle);
 	}
 
@@ -532,7 +533,7 @@ export class BaseEntity {
 	}
 
 	public attachTo(
-		entity: Entity,
+		entity: BaseEntity,
 		position: Vector3,
 		rotation: Vector3,
 		collisions = false,
@@ -618,7 +619,7 @@ export class BaseEntity {
 		return IsEntityAttached(this.handle);
 	}
 
-	public isAttachedTo(entity: Entity): boolean {
+	public isAttachedTo(entity: BaseEntity): boolean {
 		return IsEntityAttachedToEntity(this.handle, entity.Handle);
 	}
 
