@@ -1,6 +1,7 @@
 import cfx from "../cfx";
 import { ClassTypes } from "../enum/ClassTypes";
 import { eEntityType } from "../enum/eEntityType";
+import { ForceType } from "../enum/ForceType";
 import { PopulationType } from "../enum/PopulationType";
 import { Hash } from "../type/Hash";
 import { Vector4 } from "../utils";
@@ -8,7 +9,7 @@ import { Vector3 } from "../utils";
 
 export class BaseEntity {
 	protected type = ClassTypes.Entity;
-	constructor(protected handle: number) {}
+	constructor(protected handle: number) { }
 
 	public get State(): StateBagInterface {
 		return cfx.Entity(this.handle).state;
@@ -35,15 +36,15 @@ export class BaseEntity {
 		return GetEntityAttachedTo(this.handle);
 	}
 
-	public set Position(pos: Vector3, ) {
+	public set Position(pos: Vector3) {
 		SetEntityCoords(
-			this.handle, 
-			pos.x, 
-			pos.y, 
-			pos.z, 
-			true, 
-			false, 
-			false, 
+			this.handle,
+			pos.x,
+			pos.y,
+			pos.z,
+			true,
+			false,
+			false,
 			false
 		);
 	}
@@ -110,6 +111,10 @@ export class BaseEntity {
 		return Vector3.fromArray(GetEntityVelocity(this.handle));
 	}
 
+	public set Velocity(velocity: Vector3) {
+		SetEntityVelocity(this.handle, velocity.x, velocity.y, velocity.z);
+	}
+
 	public get IsVisible(): boolean {
 		return IsEntityVisible(this.handle);
 	}
@@ -120,6 +125,25 @@ export class BaseEntity {
 
 	public get IsNoLongerNeeded(): boolean {
 		return HasEntityBeenMarkedAsNoLongerNeeded(this.handle);
+	}
+
+	public ApplyForce(forceType: ForceType, amount: Vector3, offset: Vector3, boneIndex: number, isDirectionRel: boolean) {
+		ApplyForceToEntity(
+			this.handle,
+			forceType,
+			amount.x,
+			amount.y,
+			amount.z,
+			offset.x,
+			offset.y,
+			offset.z,
+			boneIndex,
+			isDirectionRel,
+			true,
+			true,
+			false,
+			true
+		);
 	}
 
 	public delete() {
