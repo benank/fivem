@@ -218,6 +218,18 @@ export class Player {
 		return CanPedHearPlayer(this.handle, ped.Handle);
 	}
 	
+	public set RunSprintMultiplier(amount: number) {
+		SetRunSprintMultiplierForPlayer(this.handle, amount);
+	}
+	
+	public set MinFallDistance(distance: number) {
+		SetPlayerFallDistance(this.handle, distance);
+	}
+	
+	public ResetStamina() {
+		ResetPlayerStamina(this.handle);
+	}
+	
 	public set Model(model: PedHash) {
         if (IsModelInCdimage(model) && IsModelValid(model)) {
 			const loadModel = async () => {
