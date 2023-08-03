@@ -894,7 +894,7 @@ export abstract class World {
 
 		const destination = direction.multiply(maxDistance).add(camera);
 		return new RaycastResult(
-			StartExpensiveSynchronousShapeTestLosProbe(
+			StartShapeTestRay(
 				camera.x,
 				camera.y,
 				camera.z,
