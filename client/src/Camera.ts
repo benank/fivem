@@ -1,4 +1,5 @@
 import { CameraShake } from './enums';
+import { CameraViewMode } from './enums/CameraViewMode';
 import { PedBone } from './models';
 import { BaseEntity } from './models/BaseEntity';
 import { Vector3 } from './utils';
@@ -244,6 +245,14 @@ export class Camera {
 				true,
 			);
 		}
+	}
+
+	public SetFollowPedCamViewMode(viewMode: CameraViewMode) {
+		SetFollowPedCamViewMode(viewMode);
+	}
+
+	public SetFollowVehicleCamViewMode(viewMode: CameraViewMode) {
+		SetFollowVehicleCamViewMode(viewMode);
 	}
 
 	public detach(): void {
