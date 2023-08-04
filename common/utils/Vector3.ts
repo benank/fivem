@@ -89,7 +89,7 @@ export class Vector3 implements Vec3 {
 		return Vector3.divide(v, v.Length);
 	}
 
-	constructor(public x: number, public y: number, public z: number) {}
+	constructor(public x: number, public y: number, public z: number) { }
 
 	public clone(): Vector3 {
 		return new Vector3(this.x, this.y, this.z);
@@ -166,5 +166,23 @@ export class Vector3 implements Vec3 {
 
 	public get Length(): number {
 		return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+	}
+
+	/**
+	 * Given a rotation in radians, converts it to a direction.
+	 */
+	public get RotationToDirection(): Vector3 {
+		const convert = 1;
+		const adjustedRotation = {
+			x: convert * this.x,
+			y: convert * this.y,
+			z: convert * this.z
+		};
+
+		return new Vector3(
+			-Math.sin(adjustedRotation.z) * Math.abs(Math.cos(adjustedRotation.x)),
+			Math.cos(adjustedRotation.z) * Math.abs(Math.cos(adjustedRotation.x)),
+			Math.sin(adjustedRotation.x)
+		);
 	}
 }
