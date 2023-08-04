@@ -95,7 +95,7 @@ export class Player {
 		return GetPlayerEndpoint(this.Src);
 	}
 
-	public get CamerRotation(): Vector3 {
+	public get CameraRotation(): Vector3 {
 		return Vector3.fromArray(GetPlayerCameraRotation(this.Src));
 	}
 
