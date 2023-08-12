@@ -5,7 +5,7 @@ import {
 	LeaveVehicleFlags,
 	VehicleSeat,
 } from './enums';
-import { Ped, Vehicle } from './models';
+import { Ped, Vehicle, Entity } from './models';
 import { BaseEntity } from './models/BaseEntity';
 import { TaskSequence } from './TaskSequence';
 import { Vector3 } from './utils';
