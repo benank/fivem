@@ -11,6 +11,15 @@ export class Player {
 	private source: number;
 	private type = ClassTypes.Player;
 
+	public static fromStateBagName(bagName: string) {
+		const playerHandle = GetPlayerFromStateBagName(bagName);
+		if (playerHandle === 0) {
+			return;
+		}
+
+		return new Player(playerHandle);
+	}
+
 	public static fromPedHandle(handle: number): Player {
 		return new Player(NetworkGetPlayerIndexFromPed(handle));
 	}
@@ -32,6 +41,10 @@ export class Player {
 
 	public get Handle(): number {
 		return this.handle;
+	}
+
+	public get IsSelf(): boolean {
+		return PlayerId() === this.handle;
 	}
 
 	/**
@@ -217,21 +230,21 @@ export class Player {
 	public CanPedHearPlayer(ped: Ped): boolean {
 		return CanPedHearPlayer(this.handle, ped.Handle);
 	}
-	
+
 	public set RunSprintMultiplier(amount: number) {
 		SetRunSprintMultiplierForPlayer(this.handle, amount);
 	}
-	
+
 	public set MinFallDistance(distance: number) {
 		SetPlayerFallDistance(this.handle, distance);
 	}
-	
+
 	public ResetStamina() {
 		ResetPlayerStamina(this.handle);
 	}
-	
+
 	public set Model(model: PedHash) {
-        if (IsModelInCdimage(model) && IsModelValid(model)) {
+		if (IsModelInCdimage(model) && IsModelValid(model)) {
 			const loadModel = async () => {
 				RequestModel(model);
 				while (!HasModelLoaded(model)) {
@@ -240,8 +253,12 @@ export class Player {
 				SetPlayerModel(PlayerId(), model);
 				SetModelAsNoLongerNeeded(model);
 			};
-			
+
 			loadModel();
-        }
+		}
+	}
+
+	public toString() {
+		return `Player ${this.Name} (${this.ServerId})`;
 	}
 }

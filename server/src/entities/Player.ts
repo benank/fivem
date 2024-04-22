@@ -9,6 +9,15 @@ export class Player {
 	protected type = ClassTypes.Player;
 	constructor(private readonly source: number) {}
 
+	public static fromStateBagName(bagName: string) {
+		const playerHandle = GetPlayerFromStateBagName(bagName);
+		if (playerHandle === 0) {
+			return;
+		}
+
+		return new Player(playerHandle);
+	}
+
 	/**
 	 * Get an interable list of players currently on the server
 	 * @returns Iterable list of Players.
@@ -50,7 +59,7 @@ export class Player {
 	public get Tokens(): string[] {
 		return getPlayerTokens(this.source);
 	}
-	
+
 	public GetIdentifier(type: PlayerIdentifier): string {
 		return GetPlayerIdentifierByType(this.Src, type);
 	}
@@ -67,27 +76,27 @@ export class Player {
 			steam: null,
 			xbl: null,
 		};
-		
+
 		identifiers.forEach(iden => {
 			if (iden.includes("discord")) {
 				playerIdens["discord"] = iden.replace("discord:", "");
-			} else if (iden.includes('fivem')) {
+			} else if (iden.includes("fivem")) {
 				playerIdens["fivem"] = iden.replace("fivem:", "");
-			} else if (iden.includes('ip')) {
+			} else if (iden.includes("ip")) {
 				playerIdens["ip"] = iden.replace("ip:", "");
-			} else if (iden.includes('license:')) {
+			} else if (iden.includes("license:")) {
 				playerIdens["license"] = iden.replace("license:", "");
-			} else if (iden.includes('license2:')) {
+			} else if (iden.includes("license2:")) {
 				playerIdens["license2"] = iden.replace("license2:", "");
-			} else if (iden.includes('live')) {
+			} else if (iden.includes("live")) {
 				playerIdens["live"] = iden.replace("live:", "");
-			} else if (iden.includes('steam')) {
+			} else if (iden.includes("steam")) {
 				playerIdens["steam"] = iden.replace("steam:", "");
-			} else if (iden.includes('xbl')) {
+			} else if (iden.includes("xbl")) {
 				playerIdens["xbl"] = iden.replace("xbl:", "");
 			}
 		});
-		
+
 		return playerIdens;
 	}
 
@@ -189,11 +198,11 @@ export class Player {
 	public set IsMuted(isMuted: boolean) {
 		MumbleSetPlayerMuted(this.source, isMuted);
 	}
-	
+
 	public set Invincible(isInvincinble: boolean) {
 		SetPlayerInvincible(this.Src, isInvincinble);
 	}
-	
+
 	public get Invincible() {
 		return GetPlayerInvincible(this.Src);
 	}
@@ -213,5 +222,9 @@ export class Player {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public emit(eventName: string, ...args: any[]): void {
 		TriggerClientEvent(eventName, this.source, ...args);
+	}
+
+	public toString() {
+		return `Player ${this.Name} (${this.source})`;
 	}
 }
