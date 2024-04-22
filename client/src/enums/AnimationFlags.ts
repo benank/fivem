@@ -4,6 +4,7 @@ export enum AnimationFlags {
 	StayInEndFrame = 2,
 	UpperBodyOnly = 16,
 	AllowRotation = 32,
+	Cancelable = 120,
 	CancelableWithMovement = 128,
 	RagdollOnCollision = 4194304,
 }
