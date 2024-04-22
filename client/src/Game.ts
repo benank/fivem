@@ -88,7 +88,8 @@ export abstract class Game {
 	}
 
 	/**
-	 * Get an iterable list of players currently on server.
+	 * Get an iterable list of active physical players that the client
+	 * knows about, eg. nearby players.
 	 * @returns Iterable list of Player objects.
 	 */
 	public static *playerList(excludeLocalPlayer = false): IterableIterator<Player> {
