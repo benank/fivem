@@ -565,7 +565,8 @@ export class BaseEntity {
 		);
 	}
 
-	/*
+	/**
+	 * 
 	 * Attaches an entity to another entity via a bone
 	 * @example
 	 * ```typescript
@@ -577,6 +578,8 @@ export class BaseEntity {
 	 *     new Vector3(105.0, 50.0, 190.0)
 	 * )
 	 * ```
+	 * 
+	 * @param syncRot Default true. If false it ignores entity rotation.
 	 */
 	public attachToBone(
 		entityBone: EntityBone,
@@ -586,6 +589,7 @@ export class BaseEntity {
 		unk9 = true,
 		useSoftPinning = true,
 		rotationOrder = 1,
+		syncRot = true,
 	): void {
 		if (this.handle == entityBone.Owner.Handle) {
 			throw new Error(
@@ -607,7 +611,7 @@ export class BaseEntity {
 			collisions,
 			IsEntityAPed(entityBone.Owner.Handle),
 			rotationOrder,
-			true,
+			syncRot,
 		);
 	}
 
