@@ -51,7 +51,7 @@ export class Vehicle extends BaseEntity {
 	private _mods: VehicleModCollection | undefined;
 	private _wheels: VehicleWheelCollection | undefined;
 	private _windows: VehicleWindowCollection | undefined;
-	protected type = ClassTypes.Vehicle;
+	public readonly type = ClassTypes.Vehicle;
 
 	constructor(handle: number) {
 		super(handle);

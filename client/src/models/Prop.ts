@@ -17,7 +17,7 @@ export class Prop extends BaseEntity {
 
 		return new Prop(NetworkGetEntityFromNetworkId(networkId));
 	}
-	protected type = ClassTypes.Prop;
+	public readonly type = ClassTypes.Prop;
 
 	constructor(handle: number) {
 		super(handle);

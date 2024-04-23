@@ -32,7 +32,7 @@ export class Ped extends BaseEntity {
 		return new Ped(NetworkGetEntityFromNetworkId(networkId));
 	}
 
-	protected type = ClassTypes.Ped;
+	public readonly type = ClassTypes.Ped;
 	private pedBones: PedBoneCollection | undefined;
 	private weapons: WeaponCollection | undefined;
 
