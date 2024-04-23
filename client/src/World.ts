@@ -891,6 +891,51 @@ export abstract class World {
 	}
 
 	/**
+	 * Cast ("shoot") a capsule in a certain direction to detect entities in the way.
+	 *
+	 * @param source Starting position of raycast.
+	 * @param direction Direction to cast a ray to.
+	 * @param maxDistance Max distance to cast the ray.
+	 * @param options Possible entity types to detect.
+	 * @param ignoreEntity An entity to ignore (usually player's Ped).
+	 * @returns RaycastResult object.
+	 */
+	public static async raycastCapsule(
+		source: Vector3,
+		direction: Vector3,
+		maxDistance: number,
+		radius: number,
+		options: IntersectOptions,
+		ignoreEntity: BaseEntity,
+	): Promise<RaycastResult> {
+		const target = Vector3.add(source, Vector3.multiply(direction, maxDistance));
+
+		const handle = StartShapeTestCapsule(
+			source.x,
+			source.y,
+			source.z,
+			target.x,
+			target.y,
+			target.z,
+			radius,
+			Number(options),
+			ignoreEntity.Handle,
+			7,
+		);
+
+		let result: RaycastResult | undefined;
+		do {
+			const res = new RaycastResult(handle);
+			if (res.Result !== 1) {
+				result = res;
+			}
+			await Delay(1);
+		} while (!result);
+
+		return result;
+	}
+
+	/**
 	 * Cast a ray from the local players camera until it hits an entity
 	 *
 	 * @param maxDistance Max distance to cast the ray.
