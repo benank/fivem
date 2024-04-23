@@ -1,10 +1,10 @@
 export class Color {
     public static fromArgb(a: number, r: number, g: number, b: number): Color {
-        return new Color(a, r, g, b);
+        return new Color(r, g, b, a);
     }
 
     public static fromRgb(r: number, g: number, b: number): Color {
-        return new Color(255, r, g, b);
+        return new Color(r, g, b);
     }
 
     public static fromArray(
@@ -28,42 +28,42 @@ export class Color {
 
 export class ConsoleColor {
     static get Red() {
-        return '^1';
+        return "^1";
     }
 
     static get Green() {
-        return '^2';
+        return "^2";
     }
 
     static get Yellow() {
-        return '^3';
+        return "^3";
     }
 
     static get Blue() {
-        return '^4';
+        return "^4";
     }
 
     static get LightBlue() {
-        return '^5';
+        return "^5";
     }
 
     static get Purple() {
-        return '^6';
+        return "^6";
     }
 
     static get Default() {
-        return '^7';
+        return "^7";
     }
 
     static get DarkRed() {
-        return '^8';
+        return "^8";
     }
 
     static get Fuchsia() {
-        return '^9';
+        return "^9";
     }
 
     static get White() {
-        return '^0';
+        return "^0";
     }
 }
