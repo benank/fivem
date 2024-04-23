@@ -1,4 +1,4 @@
-import { Delay, Model, Prop } from './';
+import { Delay, Model, Prop, Vector2 } from './';
 import { Blip } from './Blip';
 import { Camera } from './Camera';
 import {
@@ -819,6 +819,18 @@ export abstract class World {
 	 */
 	public static drawLine(start: Vector3, end: Vector3, color: Color): void {
 		DrawLine(start.x, start.y, start.z, end.x, end.y, end.z, color.r, color.g, color.b, color.a);
+	}
+
+	/**
+	 * Draws a 2D line in the world.
+	 *
+	 * @param start Screen coordinate of start position of line.
+	 * @param end Screen coordinate of end position of line.
+	 * @param color RGB color of line.
+	 * @param width Width of the line
+	 */
+	public static drawLine2D(start: Vector2, end: Vector2, color: Color, width: number): void {
+		DrawLine_2d(start.x, start.y, end.x, end.y, width, color.r, color.g, color.b, color.a);
 	}
 
 	/**
