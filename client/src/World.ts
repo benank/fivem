@@ -1,4 +1,4 @@
-import { Model, Prop } from './';
+import { Delay, Model, Prop } from './';
 import { Blip } from './Blip';
 import { Camera } from './Camera';
 import {
@@ -857,28 +857,37 @@ export abstract class World {
 	 * @param ignoreEntity An entity to ignore (usually player's Ped).
 	 * @returns RaycastResult object.
 	 */
-	public static raycast(
+	public static async raycast(
 		source: Vector3,
 		direction: Vector3,
 		maxDistance: number,
 		options: IntersectOptions,
 		ignoreEntity: BaseEntity,
-	): RaycastResult {
+	): Promise<RaycastResult> {
 		const target = Vector3.add(source, Vector3.multiply(direction, maxDistance));
 
-		return new RaycastResult(
-			StartExpensiveSynchronousShapeTestLosProbe(
-				source.x,
-				source.y,
-				source.z,
-				target.x,
-				target.y,
-				target.z,
-				Number(options),
-				ignoreEntity.Handle,
-				7,
-			),
+		const handle = StartShapeTestLosProbe(
+			source.x,
+			source.y,
+			source.z,
+			target.x,
+			target.y,
+			target.z,
+			Number(options),
+			ignoreEntity.Handle,
+			7,
 		);
+
+		let result: RaycastResult | undefined;
+		do {
+			const res = new RaycastResult(handle);
+			if (res.Result !== 1) {
+				result = res;
+			}
+			await Delay(1);
+		} while (!result);
+
+		return result;
 	}
 
 	/**
