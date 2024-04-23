@@ -552,6 +552,10 @@ export abstract class World {
 			CreateObject(model.Hash, position.x, position.y, position.z, isNetwork, true, dynamic),
 		);
 
+		if (!dynamic) {
+			prop.IsPositionFrozen = true;
+		}
+
 		if (placeOnGround) {
 			prop.placeOnGround();
 		}
@@ -808,6 +812,17 @@ export abstract class World {
 			fadeOut,
 			0,
 		);
+	}
+
+	/**
+	 * Draws a 3D sphere in the game world.
+	 *
+	 * @param pos World coordinate of the center of the sphere.
+	 * @param color RGBA color of the sphere.
+	 * @param radius Radius of the sphere.
+	 */
+	public static drawSphere(pos: Vector3, color: Color, radius: number): void {
+		DrawSphere(pos.x, pos.y, pos.z, radius, color.r, color.g, color.b, color.a / 255);
 	}
 
 	/**
