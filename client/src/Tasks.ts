@@ -304,26 +304,33 @@ export class Tasks {
 	public async playAnimation(
 		animDict: string,
 		animName: string,
-		blendInSpeed: number,
-		blendOutSpeed: number,
+		blendInSpeed: number = 8,
+		blendOutSpeed: number = 8,
 		duration: number,
-		playbackRate: number,
+		animStartTimePercent: number = 0,
 		flags: AnimationFlags,
 	): Promise<void> {
 		await LoadAnimDict(animDict);
+		const pos = this.ped.Position;
+		const heading = this.ped.Heading;
 
-		TaskPlayAnim(
+		TaskPlayAnimAdvanced(
 			this.ped.Handle,
 			animDict,
 			animName,
+			pos.x,
+			pos.y,
+			pos.z,
+			0,
+			0,
+			heading,
 			blendInSpeed,
 			blendOutSpeed,
 			duration,
 			flags,
-			playbackRate,
-			false,
-			false,
-			false,
+			animStartTimePercent,
+			0,
+			0,
 		);
 
 		RemoveAnimDict(animDict);
@@ -472,6 +479,6 @@ export class Tasks {
 	}
 
 	public clearAnimation(animDict: string, animName: string): void {
-		StopAnimTask(this.ped.Handle, animDict, animName, -4);
+		StopAnimTask(this.ped.Handle, animDict, animName, 1.0);
 	}
 }
