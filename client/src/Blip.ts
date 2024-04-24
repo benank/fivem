@@ -1,4 +1,4 @@
-import { Vector3 } from './utils';
+import { Vector3 } from '@common/utils';
 import { BlipColor, BlipSprite } from './enums';
 import { Entity } from './models/Entity';
 import { Player } from './models';

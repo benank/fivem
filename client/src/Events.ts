@@ -1,13 +1,11 @@
 /* eslint-disable */
 import { ClassTypes } from './enums/ClassTypes';
 import { Ped } from './models/Ped';
-import { Vector2 } from './utils/Vector2';
-import { Vector3 } from './utils/Vector3';
-import { Vector4 } from './utils/Vector4';
 import { Player } from './models/Player';
 import { Prop } from './models/Prop';
 import { Vehicle } from './models/Vehicle';
 import { Entity } from './models/Entity';
+import { Vector2, Vector3, Vector4 } from '@common/utils';
 
 export type NetEvent = (...args: any[]) => void;
 

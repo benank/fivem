@@ -1,7 +1,7 @@
 import { Game } from './Game';
 import { MaterialHash } from './hashes';
 import { Ped, Prop, Vehicle } from './models';
-import { Vector3 } from './utils';
+import { Vector3 } from '@common/utils';
 
 /**
  * Class that represents the result of a raycast.

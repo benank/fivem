@@ -8,7 +8,7 @@ import {
 import { Ped, Vehicle, Entity } from './models';
 import { BaseEntity } from './models/BaseEntity';
 import { TaskSequence } from './TaskSequence';
-import { Vector3 } from './utils';
+import { Vector3 } from '@common/utils';
 import { LoadAnimDict } from './utils/Animations';
 
 export class Tasks {

@@ -1,7 +1,8 @@
 import { Menu, Sprite } from '../../';
-import { Color, LiteEvent, Point, Size } from '../../../utils';
+import { LiteEvent, Point, Size } from '../../../utils';
 import { UIMenuItem } from './';
 import { CheckboxStyle } from '../../../enums';
+import { Color } from '@common/utils';
 
 export class UIMenuCheckboxItem extends UIMenuItem {
 	public readonly checkboxChanged = new LiteEvent();

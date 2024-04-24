@@ -1,6 +1,7 @@
+import { Color } from '@common/utils';
 import { Menu, Sprite, Text } from '../../';
 import { Alignment, Font } from '../../../enums';
-import { Color, LiteEvent, Point, Size, String } from '../../../utils';
+import { LiteEvent, Point, Size, String } from '../../../utils';
 import { ListItem } from '../modules/';
 import { UIMenuItem } from './';
 

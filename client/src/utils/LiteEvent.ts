@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface LiteEvent {
 	on(handler: { (...args: unknown[]): any }): void;
 	off(handler: { (...args: unknown[]): any }): void;

@@ -1,4 +1,5 @@
-import { Blip, Vector3 } from '.';
+import { Vector3 } from '@common/utils';
+import { Blip } from '.';
 import { Audio } from './Audio';
 import { Control, InputMode, Language, RadioStation } from './enums';
 import { Ped, Player, Prop, Vehicle } from './models';

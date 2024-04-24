@@ -1,36 +1,29 @@
 import { InvertAxis, InvertAxisFlags } from './enums';
 import type { BaseEntity } from './models/BaseEntity';
-import { Vector3 } from './utils';
+import { Vector3 } from '@common/utils';
 
 /**
- * UNFINISHED! Class that represents a particle effect asset.
+ * Class that represents a particle effect asset.
  */
 export class ParticleEffectAsset {
-	/**
-	 * Returns the name of the asset. Same as AssetName.
-	 */
-	public get Asset(): string {
-		return this.assetName;
-	}
-
-	private readonly assetName: string;
+	private readonly assetBank: string;
 
 	constructor(assetName: string) {
-		this.assetName = assetName;
+		this.assetBank = assetName;
 	}
 
 	/**
 	 * Get the name of the particle effect.
 	 */
 	public get AssetName(): string {
-		return this.assetName;
+		return this.assetBank;
 	}
 
 	/**
 	 * Get whether the particle effect has loaded into game memory.
 	 */
 	public get IsLoaded(): boolean {
-		return HasNamedPtfxAssetLoaded(this.assetName);
+		return HasNamedPtfxAssetLoaded(this.assetBank);
 	}
 
 	/**
@@ -47,28 +40,28 @@ export class ParticleEffectAsset {
 		rot: Vector3 = new Vector3(0, 0, 0),
 		scale = 1.0,
 		invertAxis: InvertAxis = { flags: InvertAxisFlags.None },
-	): boolean {
+	): number | undefined {
 		if (!this.setNextCall()) {
-			return false;
+			return;
 		}
 		const invertAxisFlags = invertAxis.flags;
-		SetPtfxAssetNextCall(this.assetName);
-		return (
-			StartParticleFxLoopedAtCoord(
-				effectName,
-				pos.x,
-				pos.y,
-				pos.z,
-				rot.x,
-				rot.y,
-				rot.z,
-				scale,
-				!!(invertAxisFlags & InvertAxisFlags.X),
-				!!(invertAxisFlags & InvertAxisFlags.Y),
-				!!(invertAxisFlags & InvertAxisFlags.Z),
-				false,
-			) > 0
+		SetPtfxAssetNextCall(this.assetBank);
+		const handle = StartParticleFxLoopedAtCoord(
+			effectName,
+			pos.x,
+			pos.y,
+			pos.z,
+			rot.x,
+			rot.y,
+			rot.z,
+			scale,
+			!!(invertAxisFlags & InvertAxisFlags.X),
+			!!(invertAxisFlags & InvertAxisFlags.Y),
+			!!(invertAxisFlags & InvertAxisFlags.Z),
+			false,
 		);
+
+		return handle;
 	}
 
 	/**
@@ -93,7 +86,7 @@ export class ParticleEffectAsset {
 			return false;
 		}
 		const invertAxisFlags = invertAxis.flags;
-		SetPtfxAssetNextCall(this.assetName);
+		SetPtfxAssetNextCall(this.assetBank);
 		// This still returns
 		return !!StartParticleFxLoopedOnEntity(
 			effectName,
@@ -119,7 +112,7 @@ export class ParticleEffectAsset {
 	public request(timeout: number): Promise<boolean> {
 		return new Promise(resolve => {
 			if (!this.IsLoaded) {
-				RequestNamedPtfxAsset(this.assetName);
+				RequestNamedPtfxAsset(this.assetBank);
 				const start = GetGameTimer();
 				const interval = setInterval(() => {
 					if (this.IsLoaded || GetGameTimer() - start >= timeout) {
@@ -137,18 +130,18 @@ export class ParticleEffectAsset {
 	 * Allow game engine to safely unload particle effect model from memory.
 	 */
 	public markAsNoLongerNeeded(): void {
-		RemoveNamedPtfxAsset(this.assetName);
+		RemoveNamedPtfxAsset(this.assetBank);
 	}
 
 	public toString(): string {
-		return this.assetName;
+		return this.assetBank;
 	}
 
 	private setNextCall(): boolean {
 		if (!this.IsLoaded) {
-			RequestNamedPtfxAsset(this.assetName);
+			RequestNamedPtfxAsset(this.assetBank);
 		} else {
-			SetPtfxAssetNextCall(this.assetName);
+			SetPtfxAssetNextCall(this.assetBank);
 			return true;
 		}
 		return false;

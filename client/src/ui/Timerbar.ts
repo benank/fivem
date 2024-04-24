@@ -1,5 +1,6 @@
+import { Color } from '@common/utils';
 import { HudComponent } from '../enums';
-import { Color, Point, Size } from '../utils';
+import { Point, Size } from '../utils';
 import { Hud } from './Hud';
 import { LoadingPrompt } from './LoadingPrompt';
 import { Screen } from './Screen';

@@ -1,3 +1,4 @@
+import { Color, Delay } from '@common/utils';
 import {
 	Container,
 	Hud,
@@ -9,9 +10,9 @@ import {
 	Text,
 	UIMenuSeparatorItem,
 } from '../';
-import { Audio, CursorSprite, Game, GameplayCamera, InputMode, Wait } from '../../';
+import { Audio, CursorSprite, Game, GameplayCamera, InputMode } from '../../';
 import { Alignment, Control, Font, MenuAlignment } from '../../enums';
-import { Color, Crypto, LiteEvent, Point, Size } from '../../utils';
+import { Crypto, LiteEvent, Point, Size } from '../../utils';
 import { UIMenuCheckboxItem, UIMenuItem, UIMenuListItem, UIMenuSliderItem } from './items';
 
 export class Menu {
@@ -685,7 +686,7 @@ export class Menu {
 					this.CurrentSelection = hoveredItemIndex ?? 0;
 					this.indexChange.emit(this.CurrentSelection);
 				}
-				await Wait(this._navigationDelay);
+				await Delay(this._navigationDelay);
 				while (Game.isDisabledControlPressed(0, Control.Attack) && hoveredItem.IsMouseInBounds) {
 					if (hoveredItem.selected) {
 						if (hoveredItem.enabled) {
@@ -707,7 +708,7 @@ export class Menu {
 						this.CurrentSelection = hoveredItemIndex ?? 0;
 						this.indexChange.emit(this.CurrentSelection);
 					}
-					await Wait(125);
+					await Delay(125);
 				}
 				this._mousePressed = false;
 			})();
@@ -723,10 +724,10 @@ export class Menu {
 				(async () => {
 					this._mousePressed = true;
 					this.goUp();
-					await Wait(this._navigationDelay);
+					await Delay(this._navigationDelay);
 					while (Game.isDisabledControlPressed(0, Control.Attack)) {
 						this.goUp();
-						await Wait(125);
+						await Delay(125);
 					}
 					this._mousePressed = false;
 				})();
@@ -745,10 +746,10 @@ export class Menu {
 				(async () => {
 					this._mousePressed = true;
 					this.goDown();
-					await Wait(this._navigationDelay);
+					await Delay(this._navigationDelay);
 					while (Game.isDisabledControlPressed(0, Control.Attack)) {
 						this.goDown();
-						await Wait(125);
+						await Delay(125);
 					}
 					this._mousePressed = false;
 				})();

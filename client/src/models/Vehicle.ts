@@ -15,7 +15,7 @@ import {
 } from '../enums';
 import { Model } from '../Model';
 import { Game } from '../Game';
-import { Vector3 } from '../utils';
+import { Vector3 } from '@common/utils';
 import { ClassTypes } from '../enums/ClassTypes';
 import { BaseEntity } from './BaseEntity';
 

@@ -1,4 +1,5 @@
-import { Delay, Model, Prop, Vector2 } from './';
+import { Color, Delay, Maths, Vector2, Vector3 } from '@common/utils';
+import { Model, ParticleEffect, ParticleEffectAsset, Prop } from './';
 import { Blip } from './Blip';
 import { Camera } from './Camera';
 import {
@@ -17,7 +18,6 @@ import type { BaseEntity } from './models/BaseEntity';
 import { Pickup } from './Pickup';
 import { RaycastResult } from './Raycast';
 import { Rope } from './Rope';
-import { Color, Maths, Vector3, Wait } from './utils';
 
 /**
  * Class with common world manipulations.
@@ -462,6 +462,32 @@ export abstract class World {
 		);
 	}
 
+	/**
+	 * Create a particle effect at a desired location.
+	 *
+	 * @returns ParticleEffect object.
+	 * @param effectName Name of the effect to spawn
+	 * @param position Position to spawn it at
+	 * @param rotation Rotation to spawn at
+	 * @param scale Scale of the effect
+	 * @returns ParticleEffect object.
+	 */
+	public static async createParticleEffect(
+		effectBank: string,
+		effectName: string,
+		position: Vector3,
+		rotation?: Vector3,
+		scale?: number,
+	): Promise<ParticleEffect> {
+		return new ParticleEffect({
+			effectBank,
+			effectName,
+			position,
+			rotation,
+			scale,
+		});
+	}
+
 	/*
 	 * Creates a rope at the specified location.
 	 *
@@ -495,7 +521,7 @@ export abstract class World {
 			}
 
 			while (!RopeAreTexturesLoaded()) {
-				await Wait(0);
+				await Delay(0);
 			}
 		}
 

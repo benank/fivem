@@ -1,4 +1,5 @@
-import { Color, Point, Size } from '../utils';
+import { Color } from '@common/utils';
+import { Point, Size } from '../utils';
 import { IDrawable, Screen } from './';
 
 export class Rectangle implements IDrawable {

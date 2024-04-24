@@ -11,7 +11,7 @@ import {
 	LicensePlateType,
 } from '../enums';
 import { VehicleMod } from './VehicleMod';
-import { Color } from '../utils';
+import { Color } from '@common/utils';
 import { VehicleToggleMod } from './VehicleToggleMod';
 
 export class VehicleModCollection {

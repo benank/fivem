@@ -1,7 +1,8 @@
+import { Color } from '@common/utils';
 import { AbstractUIMenuPanel, Menu } from '../';
 import { Rectangle, Sprite, Text } from '../../';
 import { Alignment, BadgeStyle, Font } from '../../../enums';
-import { Color, Crypto, LiteEvent, Point, Size, String } from '../../../utils';
+import { Crypto, LiteEvent, Point, Size, String } from '../../../utils';
 
 export class UIMenuItem {
 	public static badgeToTextureDict(badge: BadgeStyle): string {

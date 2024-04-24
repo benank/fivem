@@ -1,32 +1,70 @@
-import { ParticleEffectAsset } from './';
+import { Vector3, Color } from '@common/utils';
+import { Entity, ParticleEffectAsset } from './';
 import { InvertAxis, InvertAxisFlags } from './enums';
-import { Color, Vector3 } from './utils';
 
-// TODO: Lots of Matrix stuff through memory access
+export type ParticleEffectOrigin = 'position' | 'entity' | 'bone';
+
+export interface ParticleEffectArgs {
+	effectBank: string;
+	effectName: string;
+	origin?: ParticleEffectOrigin;
+	entity?: Entity;
+	entityOffset?: Vector3;
+	position?: Vector3;
+	rotation?: Vector3;
+	scale?: number;
+	/** Can only be false when using origin type 'position' */
+	loop?: boolean;
+}
+
 /**
- * UNFINISHED! Class to manage particle effects.
+ * Creates a particle effect in the world.
+ * 
+ * List of effect banks and names: https://pastebin.com/N9unUFWY
  */
-export abstract class ParticleEffect {
+export class ParticleEffect {
 	protected readonly asset: ParticleEffectAsset;
+	protected readonly effectBank: string;
 	protected readonly effectName: string;
-	protected offset: Vector3 = new Vector3(0, 0, 0);
-	protected rotation: Vector3 = new Vector3(0, 0, 0);
+	protected offset: Vector3 = Vector3.Zero;
+	protected rotation: Vector3 = Vector3.Zero;
+	protected position: Vector3 = Vector3.Zero;
 	protected color: Color = Color.empty;
 	protected scale = 1.0;
 	protected range = 1.0;
+	protected loop: boolean;
+	protected origin: ParticleEffectOrigin;
 	protected invertAxis: InvertAxis = { flags: InvertAxisFlags.None };
 	private handle: number;
 
 	/**
+	 *
 	 * Creates a particle effect.
 	 *
 	 * @param asset Particle effect asset.
 	 * @param effectName Name of effect.
+	 * @param origin If the particle should stick to a bone or a 3D coordinate.
+	 * @param loop If the particle effect should loop.
 	 */
-	constructor(asset: ParticleEffectAsset, effectName: string) {
+	constructor({
+		origin = 'position',
+		effectName,
+		effectBank,
+		loop = false,
+		scale = 1,
+		position = Vector3.Zero,
+		rotation = Vector3.Zero,
+	}: ParticleEffectArgs) {
 		this.handle = -1;
-		this.asset = asset;
+		this.origin = origin;
+		this.loop = loop;
 		this.effectName = effectName;
+		this.effectBank = effectBank;
+		this.asset = new ParticleEffectAsset(this.effectBank);
+		this.scale = scale;
+		this.position = position;
+		this.rotation = rotation;
+		this.start();
 	}
 
 	/**
@@ -43,7 +81,32 @@ export abstract class ParticleEffect {
 		return this.Handle !== -1 && DoesParticleFxLoopedExist(this.Handle);
 	}
 
-	public abstract start(): boolean;
+	public async start() {
+		const loaded = await this.asset.request(1000);
+		if (!loaded) {
+			console.error(`Failed to load particle effect ${this.effectBank}/${this.effectName}`);
+			return;
+		}
+
+		if (this.loop) {
+			// TODO
+			if (this.origin === 'position') {
+			} else {
+			}
+		} else {
+			if (this.origin === 'position') {
+				this.asset.startNonLoopedAtCoord(
+					this.effectName,
+					this.position,
+					this.rotation,
+					this.scale,
+					this.invertAxis,
+				);
+			} else {
+				// this.asset.startNonLoopedOnEntity()
+			}
+		}
+	}
 
 	/**
 	 * Stop a particle effect.
@@ -89,7 +152,7 @@ export abstract class ParticleEffect {
 	}
 
 	/**
-	 * Set the range of the particle effect.
+	 * Set the range of the particle effect. (looped only)
 	 */
 	public set Range(range: number) {
 		this.range = range;
@@ -116,6 +179,7 @@ export abstract class ParticleEffect {
 
 	/**
 	 * Set a paramaeter of a particle effect.
+	 * Only works for looped particle effects.
 	 *
 	 * @param parameterName Name of parameter.
 	 * @param value Value of parameter.

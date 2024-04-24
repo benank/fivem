@@ -1,4 +1,5 @@
-import { Prop, Vehicle, Entity, Model, Color, PedHash, Wait } from '..';
+import { Prop, Vehicle, Entity, Model, PedHash } from '..';
+import { Color, Delay } from '@common/utils';
 import cfx, { StateBagChangeHandler } from '../cfx';
 import { ClassTypes } from '../enums/ClassTypes';
 import { Ped } from './';
@@ -248,7 +249,7 @@ export class Player {
 			const loadModel = async () => {
 				RequestModel(model);
 				while (!HasModelLoaded(model)) {
-					await Wait(100);
+					await Delay(100);
 				}
 				SetPlayerModel(PlayerId(), model);
 				SetModelAsNoLongerNeeded(model);

@@ -1,4 +1,5 @@
-import { Player, Vector3 } from '../';
+import { Player } from '../';
+import { Vector3 } from '@common/utils';
 import {
 	DrivingStyle,
 	FiringPattern,

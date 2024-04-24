@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Color, Point, Size, Wait } from '../../../../utils';
+import { Point, Size } from '../../../../utils';
 import { AbstractUIMenuPanel } from './';
 import { Menu, Sprite, Text } from '../../../';
 import { Alignment, Control, Font } from '../../../../enums';
 import { Game } from '../../../../Game';
+import { Color, Delay } from '@common/utils';
 
 export class UIMenuGridPanel extends AbstractUIMenuPanel {
 	protected readonly background: Sprite;
@@ -248,7 +248,7 @@ export class UIMenuGridPanel extends AbstractUIMenuPanel {
 			(async () => {
 				const drawOffset = this.ParentMenu?.DrawOffset ?? new Point(0, 0);
 				while (Game.isDisabledControlPressed(0, Control.Attack)) {
-					await Wait(0);
+					await Delay(0);
 					let cX = (GetControlNormal(0, Control.CursorX) - drawOffset.X) * Menu.screenWidth;
 					let cY = (GetControlNormal(0, Control.CursorY) - drawOffset.Y) * Menu.screenHeight;
 					cX -= this._circle.size.width / 2;

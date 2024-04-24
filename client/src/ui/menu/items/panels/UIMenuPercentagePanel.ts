@@ -1,8 +1,9 @@
-import { Color, Point, Size } from '../../../../utils';
+import { Point, Size } from '../../../../utils';
 import { AbstractUIMenuPanel } from './';
 import { Menu, Rectangle, Sprite, Text } from '../../../';
 import { Alignment, Control, Font } from '../../../../enums';
-import { Game, Wait } from '../../../../';
+import { Game } from '../../../../';
+import { Color, Delay } from '@common/utils';
 
 export class UIMenuPercentagePanel extends AbstractUIMenuPanel {
 	protected readonly background: Sprite;
@@ -145,7 +146,7 @@ export class UIMenuPercentagePanel extends AbstractUIMenuPanel {
 			this._pressed = true;
 			(async () => {
 				while (Game.isDisabledControlPressed(0, Control.Attack)) {
-					await Wait(0);
+					await Delay(0);
 					this._activeBar.size.width = this._getProgress();
 				}
 				this.updateParentItem();

@@ -8,7 +8,7 @@
     "types": ["@citizenfx/client"],
     "strict": true,
 	"paths": {
-		"@common/*": ["../common/src/*"]
+		"@common/*": ["../common/*"]
 	},
     "strictNullChecks": true
   },

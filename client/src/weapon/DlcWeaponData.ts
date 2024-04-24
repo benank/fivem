@@ -1,6 +1,5 @@
+import { getUInt32FromUint8Array, getStringFromUInt8Array } from '@common/utils';
 import { WeaponHash } from '../hashes';
-import { getUInt32FromUint8Array } from '../utils';
-import { getStringFromUInt8Array } from '../utils';
 
 /**
  * DlcWeaponData

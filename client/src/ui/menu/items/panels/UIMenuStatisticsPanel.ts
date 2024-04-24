@@ -1,6 +1,7 @@
-import { Color, Point, Size } from '../../../../utils';
+import { Point, Size } from '../../../../utils';
 import { AbstractUIMenuPanel, UIMenuStatisticsPanelItem } from './';
 import { Menu, Rectangle } from '../../../';
+import { Color } from '@common/utils';
 
 export class UIMenuStatisticsPanel extends AbstractUIMenuPanel {
 	protected readonly background: Rectangle;

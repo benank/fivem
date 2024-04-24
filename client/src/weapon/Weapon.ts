@@ -9,10 +9,10 @@ import { WeaponGroup } from './WeaponGroup';
 import { WeaponLivery } from './WeaponLivery';
 import { WeaponLiveryColor } from './WeaponLiveryColor';
 import { WeaponHudStats } from './WeaponHudStats';
-import { enumValues } from '../utils';
 import { Mk2WeaponHash } from './Mk2WeaponHash';
 import { WeaponComponentHash } from '../weaponComponent';
 import { WeaponComponentHashesByWeaponHash } from '../weaponComponent/WeaponComponentHashesByWeaponHash';
+import { enumValues } from '@common/utils';
 
 /**
  * ped weapon

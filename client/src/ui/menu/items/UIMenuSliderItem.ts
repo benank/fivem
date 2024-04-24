@@ -1,7 +1,8 @@
 import { Menu, Rectangle, Sprite } from '../../';
 import { UIMenuItem } from './';
-import { Color, LiteEvent, Point, Size } from '../../../utils';
+import { LiteEvent, Point, Size } from '../../../utils';
 import { BadgeStyle } from '../../../enums';
+import { Color } from '@common/utils';
 
 export class UIMenuSliderItem extends UIMenuItem {
 	public readonly sliderChanged = new LiteEvent();

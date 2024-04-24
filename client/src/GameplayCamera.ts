@@ -1,6 +1,6 @@
 import { Camera } from './Camera';
 import { CameraShake } from './enums';
-import { Vector3 } from './utils';
+import { Vector3 } from '@common/utils';
 
 /**
  * The current rendering gameplay camera

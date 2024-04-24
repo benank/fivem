@@ -1,4 +1,4 @@
-import { Vector3 } from '../utils';
+import { Vector3 } from '@common/utils';
 import type { BaseEntity } from './BaseEntity';
 
 export class EntityBone {

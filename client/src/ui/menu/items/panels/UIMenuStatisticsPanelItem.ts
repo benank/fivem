@@ -1,6 +1,7 @@
-import { Color, Crypto, Point, Size } from '../../../../utils';
+import { Crypto, Point, Size } from '../../../../utils';
 import { Rectangle, Text } from '../../../';
 import { Alignment, Font } from '../../../../enums';
+import { Color } from '@common/utils';
 
 export class UIMenuStatisticsPanelItem {
 	public readonly id: string = Crypto.uuidv4();

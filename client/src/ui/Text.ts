@@ -1,5 +1,6 @@
+import { Color } from '@common/utils';
 import { Alignment, Font } from '../enums';
-import { Color, Point, Size } from '../utils';
+import { Point, Size } from '../utils';
 import { IDrawable, Screen } from './';
 
 export class Text implements IDrawable {

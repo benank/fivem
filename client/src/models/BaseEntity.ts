@@ -3,7 +3,7 @@ import { ForceType } from '../enums';
 import { Game } from '../Game';
 import { MaterialHash, WeaponHash } from '../hashes';
 import { Model } from '../Model';
-import { Quaternion, Vector3 } from '../utils';
+import { Maths, Quaternion, Vector3 } from '@common/utils';
 import { EntityBoneCollection, Ped, Prop, Vehicle } from './';
 import { EntityBone } from './EntityBone';
 import cfx, { StateBagChangeHandler } from '../cfx';
@@ -37,6 +37,7 @@ export class BaseEntity {
 	protected stateBagCookies: number[] = [];
 	protected netId: number | null = null;
 	protected type = ClassTypes.Entity;
+	protected scale: number = 1;
 
 	constructor(handle: number) {
 		this.handle = handle;
@@ -133,6 +134,29 @@ export class BaseEntity {
 
 	public get ForwardVector(): Vector3 {
 		return Vector3.fromArray(GetEntityForwardVector(this.handle));
+	}
+
+	public get Scale(): number {
+		return this.scale;
+	}
+
+	/**
+	 * Sets the scale of an entity.
+	 * 
+	 * Setting the scale of an entity does not scale its hitbox
+	 * or collision size. Best used for static props. Doesn't work
+	 * for peds or vehicles.
+	 * 
+	 * Use with caution. This can cause very strange things to happen
+	 * to the entity that it is applied to.
+	 */
+	public set Scale(scale: number) {
+		const currentMatrix = this.Matrix;
+		const originalMatrix = Maths.applyMatrixScale(currentMatrix, 1 / this.scale);
+
+		const newMatrix = Maths.applyMatrixScale(originalMatrix, scale);
+		this.Matrix = newMatrix;
+		this.scale = scale;
 	}
 
 	public get Matrix(): Vector3[] {
@@ -566,7 +590,7 @@ export class BaseEntity {
 	}
 
 	/**
-	 * 
+	 *
 	 * Attaches an entity to another entity via a bone
 	 * @example
 	 * ```typescript
@@ -578,7 +602,7 @@ export class BaseEntity {
 	 *     new Vector3(105.0, 50.0, 190.0)
 	 * )
 	 * ```
-	 * 
+	 *
 	 * @param syncRot Default true. If false it ignores entity rotation.
 	 */
 	public attachToBone(

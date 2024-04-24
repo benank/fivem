@@ -1,8 +1,9 @@
-import { Color, Point, Size } from '../../../../utils';
+import { Point, Size } from '../../../../utils';
 import { AbstractUIMenuPanel } from './';
 import { Rectangle, Sprite, Text } from '../../../';
 import { Alignment, Control, Font } from '../../../../enums';
 import { Game, Menu } from '../../../../';
+import { Color } from '@common/utils';
 
 export class UIMenuColorPanel extends AbstractUIMenuPanel {
 	protected readonly background: Sprite;

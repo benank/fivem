@@ -1,5 +1,5 @@
+import { Maths } from '@common/utils';
 import { Font, Screen, Text } from '..';
-import { Maths } from './Maths';
 
 export abstract class String {
 	public static stringToArray(input: string): string[] {
