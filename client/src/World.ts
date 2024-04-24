@@ -863,6 +863,30 @@ export abstract class World {
 	}
 
 	/**
+	 * Draws text to the screen.
+	 *
+	 * @param pos 2D position on screen with coords between 0-1
+	 * @param text String of the text to display
+	 * @param color Color of the text
+	 * @param scale Text scale, default 1
+	 * @param font Font number between 0-4
+	 */
+	public static drawText2D(
+		pos: Vector2,
+		text: string,
+		color: Color,
+		scale: number,
+		font = 0,
+	): void {
+		SetTextFont(font);
+		SetTextScale(1, scale);
+		SetTextColour(color.r, color.g, color.b, color.a);
+		SetTextEntry('STRING');
+		AddTextComponentString(text);
+		DrawText(pos.x, pos.y);
+	}
+
+	/**
 	 * Draws a 2D line in the world.
 	 *
 	 * @param start Screen coordinate of start position of line.
