@@ -9,6 +9,7 @@ export type Vector = Vector3 | Vec3;
 
 export class Vector3 implements Vec3 {
     public static readonly Zero: Vector3 = new Vector3(0, 0, 0);
+    public static readonly One: Vector3 = new Vector3(1, 1, 1);
 
     public static create(v1: Vec3 | number): Vector3 {
         if (typeof v1 === "number") return new Vector3(v1, v1, v1);
