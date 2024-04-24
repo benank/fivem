@@ -37,7 +37,7 @@ export class BaseEntity {
 	protected stateBagCookies: number[] = [];
 	protected netId: number | null = null;
 	protected type = ClassTypes.Entity;
-	protected scale: number = 1;
+	protected scale: Vector3 = Vector3.One;
 
 	constructor(handle: number) {
 		this.handle = handle;
@@ -136,23 +136,23 @@ export class BaseEntity {
 		return Vector3.fromArray(GetEntityForwardVector(this.handle));
 	}
 
-	public get Scale(): number {
+	public get Scale(): Vector3 {
 		return this.scale;
 	}
 
 	/**
 	 * Sets the scale of an entity.
-	 * 
+	 *
 	 * Setting the scale of an entity does not scale its hitbox
 	 * or collision size. Best used for static props. Doesn't work
 	 * for peds or vehicles.
-	 * 
+	 *
 	 * Use with caution. This can cause very strange things to happen
 	 * to the entity that it is applied to.
 	 */
-	public set Scale(scale: number) {
+	public set Scale(scale: Vector3) {
 		const currentMatrix = this.Matrix;
-		const originalMatrix = Maths.applyMatrixScale(currentMatrix, 1 / this.scale);
+		const originalMatrix = Maths.applyMatrixScale(currentMatrix, Vector3.One.divide(this.scale));
 
 		const newMatrix = Maths.applyMatrixScale(originalMatrix, scale);
 		this.Matrix = newMatrix;
