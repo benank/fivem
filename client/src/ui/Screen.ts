@@ -104,11 +104,18 @@ export abstract class Screen {
 		return new Notification(DrawNotification(blinking, showInBrief));
 	}
 
-	public static worldToScreen(position: Vector3, scaleWidth = false): Vector2 {
-		const coords = GetScreenCoordFromWorldCoord(position.x, position.y, position.z);
-		return new Vector2(
-			coords[1] * (scaleWidth ? this.ScaledWidth : this.Width),
-			coords[2] * this.Height,
-		);
+	/**
+	 * Converts world coordinates to screen coordinates
+	 *
+	 * @param position World position
+	 * @param relative Set to true to make the coords returned in the range of 0-1
+	 * @returns A table containing the screen coordinates and boolean if the coords are on screen.
+	 */
+	public static worldToScreen(position: Vector3, relative = false): [Vector2, boolean] {
+		const [onScreen, x, y] = GetScreenCoordFromWorldCoord(position.x, position.y, position.z);
+		return [
+			new Vector2(x * (relative ? 1 : this.Width), y * (relative ? 1 : this.Height)),
+			onScreen,
+		];
 	}
 }
