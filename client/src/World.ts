@@ -1,5 +1,5 @@
 import { Color, Delay, Maths, Vector2, Vector3 } from '@common/utils';
-import { Model, ParticleEffect, ParticleEffectAsset, Prop } from './';
+import { Game, Model, ParticleEffect, ParticleEffectAsset, Prop } from './';
 import { Blip } from './Blip';
 import { Camera } from './Camera';
 import {
@@ -451,7 +451,7 @@ export abstract class World {
 		const vehicleCount: number = Object.keys(VehicleHash).length / 2; // check
 		const randomIndex: number = Maths.getRandomInt(0, vehicleCount);
 		const randomVehicleName: string = VehicleHash[randomIndex];
-		const modelHash: number = GetHashKey(randomVehicleName);
+		const modelHash: number = Game.generateHash(randomVehicleName);
 		const model = new Model(modelHash);
 
 		if (!model.IsVehicle || !(await model.request(1000))) {

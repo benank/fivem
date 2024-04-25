@@ -1,5 +1,6 @@
 import cfx from "../cfx";
 import { ClassTypes } from "../enum/ClassTypes";
+import { Game } from "../Game";
 import { PlayerIdentifier } from "../type/PlayerIdentifier";
 import { cleanPlayerName } from "../utils";
 import { Vector3 } from "../utils";
@@ -53,7 +54,7 @@ export class Player {
 	}
 
 	public set Model(model: string) {
-		SetPlayerModel(this.Src, GetHashKey(model));
+		SetPlayerModel(this.Src, Game.generateHash(model));
 	}
 
 	public get Tokens(): string[] {
