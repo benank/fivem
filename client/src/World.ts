@@ -99,7 +99,7 @@ export abstract class World {
 	 * @param value On or off.
 	 */
 	public static set Blackout(value: boolean) {
-		SetBlackout(value);
+		SetArtificialLightsState(value);
 	}
 
 	/**
