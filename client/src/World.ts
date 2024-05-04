@@ -601,6 +601,9 @@ export abstract class World {
 			prop.placeOnGround();
 		}
 
+		// Set position again to ensure it is properly placed
+		prop.Position = position;
+
 		return prop;
 	}
 
