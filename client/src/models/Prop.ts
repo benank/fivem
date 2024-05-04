@@ -1,7 +1,10 @@
+import { Color } from '@common/utils';
 import { ClassTypes } from '../enums/ClassTypes';
 import { BaseEntity } from './BaseEntity';
 
 export class Prop extends BaseEntity {
+	private static lastPropOutline: number | undefined;
+
 	public static exists(prop: Prop): boolean {
 		return typeof prop !== 'undefined' && prop.exists();
 	}
@@ -29,5 +32,32 @@ export class Prop extends BaseEntity {
 
 	public placeOnGround(): void {
 		PlaceObjectOnGroundProperly(this.handle);
+	}
+
+	/**
+	 * Sets whether an outline should be drawn around this prop.
+	 * Only one prop may have an outline at once to avoid crashes.
+	 * @param enabled False to disable, true to enable
+	 * @param color Color of the outline
+	 * @param shader Shader used to draw the outline.
+	 * 0: Default value, gauss shader.
+	 * 1: 2px wide solid color outline.
+	 * 2: Fullscreen solid color except for entity.
+	 */
+	public setDrawOutline(enabled: boolean, color: Color = Color.white, shader = 0) {
+		if (!enabled) {
+			SetEntityDrawOutline(this.handle, false);
+			Prop.lastPropOutline = undefined;
+			return;
+		}
+
+		if (Prop.lastPropOutline) {
+			SetEntityDrawOutline(Prop.lastPropOutline, false);
+		}
+
+		SetEntityDrawOutlineShader(shader);
+		SetEntityDrawOutlineColor(color.r, color.g, color.b, color.a);
+		SetEntityDrawOutline(this.handle, true);
+		Prop.lastPropOutline = this.handle;
 	}
 }
