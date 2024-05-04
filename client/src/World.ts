@@ -1,5 +1,5 @@
-import { Color, Delay, Maths, Vector2, Vector3 } from '@common/utils';
-import { Game, Model, ParticleEffect, ParticleEffectAsset, Prop } from './';
+import { Color, Delay, Maths, Quaternion, Vector2, Vector3 } from '@common/utils';
+import { Game, Model, ParticleEffect, Prop } from './';
 import { Blip } from './Blip';
 import { Camera } from './Camera';
 import {
@@ -563,13 +563,16 @@ export abstract class World {
 	 * @param isNetwork
 	 * @returns Prop object.
 	 */
-	public static async createProp(
-		model: Model,
-		position: Vector3,
-		dynamic: boolean,
-		placeOnGround: boolean,
-		isNetwork = true,
-	): Promise<Prop | null> {
+	public static async createProp({
+		model,
+		position,
+		dynamic = false,
+		placeOnGround = false,
+		isNetwork = false,
+		rotation,
+		quaternion,
+		scale,
+	}: CreatePropArgs): Promise<Prop | null> {
 		if (!model.IsProp || !(await model.request(1000))) {
 			return null;
 		}
@@ -577,6 +580,18 @@ export abstract class World {
 		const prop = new Prop(
 			CreateObject(model.Hash, position.x, position.y, position.z, isNetwork, true, dynamic),
 		);
+
+		if (rotation) {
+			prop.Rotation = rotation;
+		}
+
+		if (quaternion) {
+			prop.Quaternion = quaternion;
+		}
+
+		if (scale) {
+			prop.Scale = scale;
+		}
 
 		if (!dynamic) {
 			prop.IsPositionFrozen = true;
@@ -1200,4 +1215,15 @@ export abstract class World {
 		'SNOWLIGHT',
 		'XMAS',
 	];
+}
+
+interface CreatePropArgs {
+	model: Model;
+	position: Vector3;
+	rotation?: Vector3;
+	scale?: Vector3;
+	quaternion?: Quaternion;
+	dynamic?: boolean;
+	placeOnGround?: boolean;
+	isNetwork?: boolean;
 }
