@@ -165,7 +165,7 @@ export class Tasks {
 		);
 	}
 
-	public goTo(position: Vector3, ignorePaths = false, timeout = -1, speed = 1): void {
+	public goTo(position: Vector3, ignorePaths = false, timeout = -1, speed = 1, targetHeading = 0): void {
 		if (ignorePaths) {
 			TaskGoStraightToCoord(
 				this.ped.Handle,
@@ -174,7 +174,7 @@ export class Tasks {
 				position.z,
 				speed,
 				timeout,
-				0,
+				targetHeading,
 				0,
 			);
 		} else {
